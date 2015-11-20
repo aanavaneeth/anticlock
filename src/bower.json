@@ -1,0 +1,10 @@
+{
+    "name": "stu_angular",
+    "version": "2.0.0-beta",
+    "dependencies": {
+        "lodash": "3.10.1",
+        "easeljs": "0.8.1",
+        "createjs-tweenjs":"0.6.1",
+        "createjs-preloadjs": "0.6.1"
+    }
+}
