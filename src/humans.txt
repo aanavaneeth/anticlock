@@ -9,6 +9,9 @@
 
     @AANavaneeth
 
+Insipired from Yasunobu Ikeda a.k.a @clockmaker
+
+
 # TECHNOLOGY COLOPHON
 
     CSS3, HTML5, JS
