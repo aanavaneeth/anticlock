@@ -332,9 +332,9 @@ var project;
             var color = this.color;
             var lineWidth = this.lineWidth;
             var steps = this.steps;
-            // 線の色と太さを指定
+            //
             targetShape.graphics.clear().setStrokeStyle(lineWidth, "round");
-            // 極座標におけるA点とB点の半径を算出
+            //
             var ar = radius - length;
             var br = radius;
             var percentForward = this._count1.percent;
@@ -342,17 +342,17 @@ var project;
             percentForward = Math.min(1.0, Math.max(0.0, percentForward));
             percentBackward = Math.min(1.0, Math.max(0.0, percentBackward));
             var percent = this._count1.percent;
-            // 繰り返し文で1周処理させる
-            // (1周=360度=2πはstepsの値で分割)
+            //
+            //
             var max = steps * percent;
             for (var i = 0; i < max; i++) {
-                // 角度θを算出
+                //
                 var theta = (i / steps) * (2 * Math.PI);
                 theta -= Math.PI / 2;
-                // A点の座標を計算 (直交座標に変換)
+                //
                 var ax = ar * Math.cos(theta);
                 var ay = ar * Math.sin(theta);
-                // B点の座標を計算 (直交座標に変換)
+                //
                 var bx = br * Math.cos(theta);
                 var by = br * Math.sin(theta);
                 var currentI = i / steps;
