@@ -11,8 +11,7 @@
         width: 512,
         height: 512,
         fps: 60,
-        color: "#000000",
-        manifest: []
+        color: "#000000"
     };
 
 
@@ -47,18 +46,23 @@
 
     (lib.LineMin = function() {
         this.initialize();
-
-        //
-        this.shape = new cjs.Shape();
-        this.shape.graphics.f("#EEEEEE").s().rr(-6.95,-85,13.9,170,6.95);
-        this.shape.setTransform(0,-103,1.01,1);
-
-        //
-        this.shape_1 = new cjs.Shape();
-        this.shape_1.graphics.f("#EEEEEE").s().dr(-2,-11.3,4,22.6);
-        this.shape_1.setTransform(0,-11.3);
-
-        this.addChild(this.shape_1,this.shape);
+        var large = 12;
+        var small = 6;
+        function getTipCordinates (base) {
+            return [
+                {x: -base/2, y: base *( Math.tan(45 *  Math.PI / 180) ) /2 },
+                { x: base/2, y :  base * ( Math.tan(45 *  Math.PI / 180) /2 )  }
+            ];
+        }
+        var triangle = getTipCordinates(small);
+        this.newHand = new cjs.Shape();
+        this.newHand.graphics.f("white").s("White").moveTo(0,0)
+            .lineTo(triangle[0 ].x,triangle[0 ].y )
+            .lineTo(-large/2, 170)
+            .lineTo(large/2, 170)
+            .lineTo(triangle[1].x, triangle[1].y);
+        this.newHand.setTransform(0,-170,1,1);
+        this.addChild( this.newHand);
     }).prototype = p = new cjs.Container();
     p.nominalBounds = rect = new cjs.Rectangle(-7,-188,14,188);
     p.frameBounds = [rect];
@@ -66,18 +70,25 @@
 
     (lib.LineHour = function() {
         this.initialize();
+        var large = 12;
+        var small = 6;
+        function getTipCordinates (base) {
+            return [
+                {x: -base/2, y: base *( Math.tan(45 *  Math.PI / 180) ) /2 },
+                { x: base/2, y :  base * ( Math.tan(45 *  Math.PI / 180) /2 )  }
+            ];
+        }
+        var triangle = getTipCordinates(small);
+        this.newHand = new cjs.Shape();
+        this.newHand.graphics.f("white").s("White").moveTo(0,0)
+            .lineTo(triangle[0 ].x,triangle[0 ].y )
+            .lineTo(-large/2, 100)
+            .lineTo(large/2, 100)
+            .lineTo(triangle[1].x, triangle[1].y);
+        this.newHand.setTransform(0,-100,1,1);
+        this.addChild( this.newHand);
 
-        //
-        this.shape = new cjs.Shape();
-        this.shape.graphics.f("#EEEEEE").s().rr(-7,-47,14,94,7);
-        this.shape.setTransform(0,-65);
 
-        //
-        this.shape_1 = new cjs.Shape();
-        this.shape_1.graphics.f("#FFFFFF").s().dr(-2.5,-11.3,5,22.6);
-        this.shape_1.setTransform(0,-11.3);
-
-        this.addChild(this.shape_1,this.shape);
     }).prototype = p = new cjs.Container();
     p.nominalBounds = rect = new cjs.Rectangle(-7,-112,14,112);
     p.frameBounds = [rect];
@@ -137,15 +148,8 @@ var project;
             d.prototype = new __();
         };
 
-    var loader;
     var Main = (function () {
         function Main() {
-            //this.manifest = [
-            //    { src: "http://jsrun.it/assets/8/h/M/u/8hMuz.png", id: "AppleWatch" }
-            //];
-            //loader = new createjs.LoadQueue(false);
-            //loader.on("complete", this.handleComplete, this);
-           // loader.loadManifest(this.manifest);
             this.handleComplete();
         }
         Main.prototype.handleComplete = function () {
@@ -188,13 +192,7 @@ var project;
             this.setup();
         }
         Clock.prototype.setup = function () {
-            //var bmp = new createjs.Bitmap("http://jsrun.it/assets/8/h/M/u/8hMuz.png");
-            //bmp.regX = 442 / 2 - 10;
-            //bmp.regY = 486 / 2;
-            //bmp.scaleX = bmp.scaleY = 640 / 486;
-            //this.addChildAt(bmp, 0);
-            // -------------------------------
-            var wrapClockS = new createjs.Container();
+         var wrapClockS = new createjs.Container();
             this.layerBg.addChild(wrapClockS);
             var shapeClock = new createjs.Shape();
             wrapClockS.addChild(shapeClock);
@@ -204,18 +202,16 @@ var project;
             wrapClockS.addChild(shapeClock4);
             var shapeClock3 = new createjs.Shape();
             wrapClockS.addChild(shapeClock3);
-            var textM = new DisplayMotion(wrapClockS, 215, "#888", "20px Arial", 12, 1);
-            textM.start(4000);
+            var textM = new DisplayMotion(wrapClockS, 215, "#FFF", "20px Arial ", 12, 1);
+            textM.start(2000);
             var circle2 = new CircleMotion(shapeClock, 200, 10, 40, 1.0, 75);
             circle2.start(0);
             var circle = new CircleMotion(shapeClock2, 200, 10, 40, 1.0, 150);
             circle.start(2000);
-            var circle4 = new CircleMotion(shapeClock4, 170, 40, 60, 10.0, 12);
+            var circle4 = new CircleMotion(shapeClock4, 170, 20, 60, 3.0, 12);
             circle4.start(2000);
             var circle3 = new CircleMotion(shapeClock3, 200, 10, 40, 1.0, 300);
-            circle3.start(4000);
-            //var circle3 = new CircleMotion(shapeClock3, 200, 10, 20, 2.0, 12);
-            //circle3.start(0);
+            circle3.start(2000);
             this.on("tick", this.onTick, this);
         };
 
@@ -296,7 +292,6 @@ var project;
             }
         }
         DisplayMotion.prototype.digitNumber = function (val) {
-            //return val < 10 ? "0" + val : "" + val;
             return val === 0 ? 12 : val ;
         };
         DisplayMotion.prototype.drawLines = function () {
@@ -347,7 +342,7 @@ var project;
             var max = steps * percent;
             for (var i = 0; i < max; i++) {
                 //
-                var theta = (i / steps) * (2 * Math.PI);
+                var theta = (1 - i / steps) * (2 * Math.PI);
                 theta -= Math.PI / 2;
                 //
                 var ax = ar * Math.cos(theta);
