@@ -163,8 +163,8 @@ var project;
             this.clock = new Clock();
             this.container.addChild(this.clock);
             this.stage.addChild(this.container);
-            //createjs.Tween.get(this.clock)
-            //    .to({ scaleX: 1.2, scaleY: 1.2 }, 0)
+            createjs.Tween.get(this.clock)
+                .to({ scaleX: 1.4, scaleY: 1.4 }, 0);
             //    .to({ scaleX: 1.0, scaleY: 1.0 }, 10000, createjs.Ease.cubicOut);
             createjs.Ticker.timingMode = createjs.Ticker.RAF;
             createjs.Ticker.on("tick", this.handleTick, this);
