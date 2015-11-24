@@ -13,14 +13,7 @@
         fps: 60,
         color: "#000000"
     };
-
-
-
-// symbols:
-
-
-
-    (lib.LineSec = function() {
+   (lib.LineSec = function() {
         this.initialize();
 
         // black/red circle
@@ -93,6 +86,26 @@
     p.nominalBounds = rect = new cjs.Rectangle(-7,-112,14,112);
     p.frameBounds = [rect];
 
+    (lib.DateDay = function () {
+        this.initialize();
+
+        //6A6C6C
+        var currDate = new Date();
+        var days = ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"]
+        var day = new createjs.Text(days[currDate.getDay()], "16px Arial", "#888");        //
+        day.x = -10;
+        day.y = 100;
+        day.textAlign = "center";
+        day.textBaseline = "middle";
+        var dateString = currDate.getDate() < 10 ? "0" + currDate.getDate() : currDate.getDate();
+        var date = new createjs.Text(dateString, "16px Arial", "#888");        //
+        date.x = 20;
+        date.y = 100;
+        date.textAlign = "center";
+        date.textBaseline = "middle";
+        this.addChild( day, date );
+
+    }).prototype = p = new cjs.Container();
 
     (lib.Empty = function() {
         this.initialize();
@@ -114,10 +127,12 @@
         // clockMin_mc
         this.clockMin_mc = new lib.LineMin();
 
+        this.dateDay = new lib.DateDay()
+
         // layerBg
         this.layerBg = new lib.Empty();
 
-        this.addChild(this.layerBg,this.clockMin_mc,this.clockHour_mc,this.clockSec_mc);
+        this.addChild(this.layerBg,this.clockMin_mc,this.clockHour_mc,this.clockSec_mc, this.dateDay);
     }).prototype = p = new cjs.Container();
     p.nominalBounds = rect = new cjs.Rectangle(-201,-201,402,402);
     p.frameBounds = [rect];
